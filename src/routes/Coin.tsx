@@ -42,7 +42,7 @@ const Loader = styled.span`
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.07);
   padding: 10px 20px;
   border-radius: 10px;
 `;
@@ -66,7 +66,7 @@ const Description = styled.p`
 const Tabs = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  margin: 25px 0px;
+  margin: 35px 0px;
   gap: 10px;
 `;
 
@@ -76,7 +76,7 @@ const Tab = styled.span<{ isActive: boolean }>`
   font-size: 14px;
   font-weight: 400;
   background-color: ${(props) =>
-    props.isActive ? "rgba(222, 183, 255, 0.3)" : "rgba(255, 255, 255, 0.05)"};
+    props.isActive ? "rgba(222, 183, 255, 0.3)" : "rgba(255, 255, 255, 0.07)"};
   padding: 7px 0px;
   border-radius: 10px;
   color: ${(props) =>
@@ -217,7 +217,7 @@ function Coin() {
 
           <Routes>
             <Route path="/price" element={<Price />} />
-            <Route path="/chart" element={<Chart />} />
+            <Route path="/chart" element={<Chart coinId={coinId!} />} />
           </Routes>
         </>
       )}
