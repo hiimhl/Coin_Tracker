@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { createGlobalStyle } from "styled-components";
 import Router from "./Router";
 import { ReactQueryDevtools } from "react-query/devtools";
+
+import { ThemeProvider } from "styled-components";
+import { lightTheme, darkTheme } from "./theme";
+import Toggle from "./routes/Toggle";
+// import { useRecoilValue, ReocilRoot } from "recoil";
+// import { AtomDarkTheme } from "./atoms";
 
 // GlobalStye = 렌더링 될때 스타일 태그에 적용되는 컴포넌트, 모든 컴포넌트에 적용됨
 const GlobalStyle = createGlobalStyle`
@@ -69,11 +75,24 @@ a {
 `;
 
 function App() {
+  // const darkMode = useRecoilValue(AtomDarkTheme);
+  const [dark, setDark] = useState(false);
+  const onSwitch = (theme: boolean) => {
+    if (!theme) {
+      setDark(true);
+    } else {
+      setDark(false);
+    }
+  };
+
   return (
     <>
-      <GlobalStyle />
-      <Router />
-      <ReactQueryDevtools initialIsOpen={true} />
+      <ThemeProvider theme={dark ? darkTheme : lightTheme}>
+        <GlobalStyle />
+        <Toggle onChecked={onSwitch} />
+        <Router />
+        <ReactQueryDevtools initialIsOpen={true} />
+      </ThemeProvider>
     </>
   );
 }

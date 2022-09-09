@@ -7,6 +7,7 @@ import {
   Link,
   useMatch,
 } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import Chart from "./Chart";
 import Price from "./Price";
@@ -42,7 +43,7 @@ const Loader = styled.span`
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: rgba(255, 255, 255, 0.07);
+  background-color: ${(props) => props.theme.boxColor};
   padding: 10px 20px;
   border-radius: 10px;
 `;
@@ -66,7 +67,7 @@ const Description = styled.p`
 const Tabs = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  margin: 35px 0px;
+  margin: 30px 0px;
   gap: 10px;
 `;
 
@@ -75,14 +76,35 @@ const Tab = styled.span<{ isActive: boolean }>`
   text-transform: uppercase;
   font-size: 14px;
   font-weight: 400;
+  transition: 0.3s ease-in;
   background-color: ${(props) =>
-    props.isActive ? "rgba(222, 183, 255, 0.3)" : "rgba(255, 255, 255, 0.07)"};
-  padding: 7px 0px;
+    props.isActive ? props.theme.hoverColor : props.theme.boxColor};
+  padding: 10px 0px;
   border-radius: 10px;
   color: ${(props) =>
-    props.isActive ? props.theme.accentColor : props.theme.textColor};
+    props.isActive ? props.theme.hoverTextColor : props.theme.textColor};
   a {
     display: block;
+  }
+  &:hover {
+    background-color: ${(props) => props.theme.hoverColor};
+    color: ${(props) => props.theme.hoverTextColor};
+  }
+`;
+
+const HomeBtn = styled.button<{ isActive: boolean }>`
+  padding: 10px 20px;
+  border: none;
+  background-color: ${(props) => props.theme.hoverColor};
+  border-radius: 10px;
+  color: ${(props) => props.theme.hoverTextColor};
+  transition: background-color 0.3s ease-in, color 0.3s ease-in;
+  text-weight: 600;
+  font-size: 15px;
+  margin-top: 10px;
+
+  &:hover {
+    cursor: pointer;
   }
 `;
 
@@ -160,17 +182,27 @@ function Coin() {
   const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
     ["info", coinId],
     () => fetchCoinInfo(coinId!)
+    // ! 확장 할당 어션셜로 값이 무조건 할당 되어 있다고 전달해 값이 없어도 변수 사용할 수 있게함.
   );
   const { isLoading: priceLoading, data: priceData } = useQuery<PriceData>(
     ["price", coinId],
-    () => fetchCoinPrice(coinId!)
-    // ! 확장 할당 어션셜로 값이 무조건 할당 되어 있다고 전달해 값이 없어도 변수 사용할 수 있게함.
+    () => fetchCoinPrice(coinId!),
+    {
+      // refetchInterval: 5000,
+      //5초마다 refetch -> 데이터가 계속 업데이트 됨.
+    }
   );
 
   const loading = infoLoading || priceLoading;
 
   return (
     <Container>
+      <Helmet>
+        {/* 언제나 문서의 head로 렌더링된다.  */}
+        <title>
+          {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+        </title>
+      </Helmet>
       <Header>
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
@@ -190,8 +222,8 @@ function Coin() {
               <span>${infoData?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
-              <span>Open Source:</span>
-              <span>{infoData?.open_source ? "Yes" : "No"}</span>
+              <span>Price:</span>
+              <span>${priceData?.quotes.USD.price.toFixed(3)}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>
@@ -216,11 +248,14 @@ function Coin() {
           </Tabs>
 
           <Routes>
-            <Route path="/price" element={<Price />} />
+            <Route path="/price" element={<Price coinId={coinId!} />} />
             <Route path="/chart" element={<Chart coinId={coinId!} />} />
           </Routes>
         </>
       )}
+      <Link to={"/"}>
+        <HomeBtn isActive={chartMatch !== null}>&lt; Home</HomeBtn>
+      </Link>
     </Container>
   );
 }
