@@ -181,12 +181,12 @@ function Coin() {
   //useQuery - Data fetch
   const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
     ["info", coinId],
-    () => fetchCoinInfo(coinId!)
+    () => fetchCoinInfo(coinId || "")
     // ! 확장 할당 어션셜로 값이 무조건 할당 되어 있다고 전달해 값이 없어도 변수 사용할 수 있게함.
   );
   const { isLoading: priceLoading, data: priceData } = useQuery<PriceData>(
     ["price", coinId],
-    () => fetchCoinPrice(coinId!),
+    () => fetchCoinPrice(coinId || ""),
     {
       refetchInterval: 5000,
       //5초마다 refetch -> 데이터가 계속 업데이트 됨.

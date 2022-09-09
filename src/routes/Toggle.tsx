@@ -24,7 +24,7 @@ const ToggleBtn = styled.div<IChecked>`
     height: 28px;
     display: inline-block;
     background: ${(props) =>
-      props.onChecked
+      props.checked
         ? "linear-gradient( to right,hsl(210, 78%, 56%),hsl(146, 68%, 55%))"
         : "gray"};
     align-items: center;
@@ -44,11 +44,11 @@ const Boll = styled.div<IChecked>`
   border-radius: 50%;
   transform: translate(5px, 4px);
   transition: transform 0.3s ease-in;
-  ${(props) => props.onChecked && "transform: translate(35px, 4px)"};
+  ${(props) => props.checked && "transform: translate(35px, 4px)"};
 `;
 
 interface IChecked {
-  onChecked: boolean;
+  checked: boolean;
 }
 
 function Toggle({ onChecked }: any) {
@@ -64,10 +64,10 @@ function Toggle({ onChecked }: any) {
   };
 
   return (
-    <ToggleBtn onChecked={btn}>
+    <ToggleBtn checked={btn}>
       <span>{btn ? "Dark Mode" : "Light Mode"}</span>
       <label htmlFor="toggle">
-        <Boll onChecked={btn}></Boll>
+        <Boll checked={btn}></Boll>
       </label>
       <input
         id="toggle"
