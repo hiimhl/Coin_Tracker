@@ -53,6 +53,7 @@ interface IChecked {
 
 function Toggle({ onChecked }: any) {
   const [btn, setBtn] = useState(false);
+
   const toggleDarkTheme = () => {
     setBtn(!btn);
     if (btn) {
