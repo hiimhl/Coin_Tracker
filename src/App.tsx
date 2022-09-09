@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createGlobalStyle } from "styled-components";
 import Router from "./Router";
-import { ReactQueryDevtools } from "react-query/devtools";
+// import { ReactQueryDevtools } from "react-query/devtools";
 
 import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme } from "./theme";
@@ -91,7 +91,6 @@ function App() {
         <GlobalStyle />
         <Toggle onChecked={onSwitch} />
         <Router />
-        <ReactQueryDevtools initialIsOpen={true} />
       </ThemeProvider>
     </>
   );
