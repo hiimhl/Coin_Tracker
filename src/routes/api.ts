@@ -9,17 +9,11 @@ export function fetchCoins() {
 
 //coin
 export function fetchCoinInfo(coinId: string | undefined) {
-  if (coinId === "Coin_Tracker") {
-    coinId = "";
-  }
   return fetch(`${BASE_URL}/coins/${coinId}`) //
     .then((respones) => respones.json());
 }
 
 export function fetchCoinPrice(coinId: string | undefined) {
-  if (coinId === "Coin_Tracker") {
-    coinId = "";
-  }
   return fetch(`${BASE_URL}/tickers/${coinId}`) //
     .then((respones) => respones.json());
 }
