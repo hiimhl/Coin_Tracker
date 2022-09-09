@@ -188,7 +188,7 @@ function Coin() {
     ["price", coinId],
     () => fetchCoinPrice(coinId!),
     {
-      // refetchInterval: 5000,
+      refetchInterval: 5000,
       //5초마다 refetch -> 데이터가 계속 업데이트 됨.
     }
   );
