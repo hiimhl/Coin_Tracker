@@ -8,7 +8,7 @@ export function fetchCoins() {
 }
 
 //coin
-export function fetchCoinInfo(coinId: string) {
+export function fetchCoinInfo(coinId: string | undefined) {
   if (coinId === "Coin_Tracker") {
     coinId = "";
   }
@@ -16,7 +16,7 @@ export function fetchCoinInfo(coinId: string) {
     .then((respones) => respones.json());
 }
 
-export function fetchCoinPrice(coinId: string) {
+export function fetchCoinPrice(coinId: string | undefined) {
   if (coinId === "Coin_Tracker") {
     coinId = "";
   }
