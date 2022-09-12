@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
+
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "./atoms";
 import Router from "./Router";
 // import { ReactQueryDevtools } from "react-query/devtools";
 
 import { lightTheme, darkTheme } from "./theme";
-// import Toggle from "./routes/Toggle";
-// import { useRecoilValue, ReocilRoot } from "recoil";
-// import { AtomDarkTheme } from "./atoms";
 
 // GlobalStye = 렌더링 될때 스타일 태그에 적용되는 컴포넌트, 모든 컴포넌트에 적용됨
 const GlobalStyle = createGlobalStyle`
@@ -74,14 +74,13 @@ a {
 `;
 
 function App() {
-  const [isDark, setIsDark] = useState(false);
-  const toggleDark = () => setIsDark((current) => !current);
+  const isDark = useRecoilValue(isDarkAtom);
 
   return (
     <>
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <GlobalStyle />
-        <Router isDark={isDark} toggleDark={toggleDark} />
+        <Router />
         {/* <ReactQueryDevtools initialIsOpen={true} /> */}
       </ThemeProvider>
     </>

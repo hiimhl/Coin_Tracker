@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import { fetchCoins } from "./api";
 
+import { useSetRecoilState } from "recoil";
+import { isDarkAtom } from "../atoms";
+
 const Container = styled.div`
   padding: 0px 20px;
   max-width: 480px;
@@ -72,11 +75,12 @@ interface ICoin {
   type: string;
 }
 
-interface ICoinsProps {
-  toggleDark: () => void;
-}
+interface ICoinsProps {}
 
-function Coins({ toggleDark }: ICoinsProps) {
+function Coins() {
+  const setterFn = useSetRecoilState(isDarkAtom);
+  const toggleDarkAtom = () => setterFn((prev) => !prev);
+
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
   //2가지의 argument를 필요로함.(query key, fetch Fn)
 
@@ -88,7 +92,7 @@ function Coins({ toggleDark }: ICoinsProps) {
       </Helmet>
       <Header>
         <Title>Coins</Title>
-        <button onClick={toggleDark}>Toggle Dark Mode</button>
+        <button onClick={toggleDarkAtom}>Toggle Mode</button>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>
