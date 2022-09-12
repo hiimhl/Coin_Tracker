@@ -168,7 +168,11 @@ interface PriceData {
   };
 }
 
-function Coin() {
+interface ICoinProps {
+  isDark: boolean;
+}
+
+function Coin({ isDark }: ICoinProps) {
   const { coinId } = useParams<{ coinId: string }>();
 
   // Link state로 보낸 state 받기.
@@ -223,7 +227,7 @@ function Coin() {
             </OverviewItem>
             <OverviewItem>
               <span>Price:</span>
-              <span>${priceData?.quotes.USD.price.toFixed(3)}</span>
+              <span>${priceData?.quotes?.USD?.price?.toFixed(3)}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>
@@ -249,7 +253,10 @@ function Coin() {
 
           <Routes>
             <Route path="/price" element={<Price coinId={coinId!} />} />
-            <Route path="/chart" element={<Chart coinId={coinId!} />} />
+            <Route
+              path="/chart"
+              element={<Chart isDark={isDark} coinId={coinId!} />}
+            />
           </Routes>
         </>
       )}

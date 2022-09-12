@@ -10,5 +10,6 @@ declare module "styled-components" {
     hoverTextColor: string;
     switchColor: string;
     borderColor: string;
+    cardBgColor: string;
   }
 }

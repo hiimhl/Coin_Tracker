@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 import Router from "./Router";
 // import { ReactQueryDevtools } from "react-query/devtools";
 
-import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme } from "./theme";
-import Toggle from "./routes/Toggle";
+// import Toggle from "./routes/Toggle";
 // import { useRecoilValue, ReocilRoot } from "recoil";
 // import { AtomDarkTheme } from "./atoms";
 
@@ -75,22 +74,15 @@ a {
 `;
 
 function App() {
-  // const darkMode = useRecoilValue(AtomDarkTheme);
-  const [dark, setDark] = useState(false);
-  const onSwitch = (theme: boolean) => {
-    if (!theme) {
-      setDark(true);
-    } else {
-      setDark(false);
-    }
-  };
+  const [isDark, setIsDark] = useState(false);
+  const toggleDark = () => setIsDark((current) => !current);
 
   return (
     <>
-      <ThemeProvider theme={dark ? darkTheme : lightTheme}>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <GlobalStyle />
-        <Toggle onChecked={onSwitch} />
-        <Router />
+        <Router isDark={isDark} toggleDark={toggleDark} />
+        {/* <ReactQueryDevtools initialIsOpen={true} /> */}
       </ThemeProvider>
     </>
   );

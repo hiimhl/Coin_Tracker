@@ -18,12 +18,13 @@ const Header = styled.header`
 `;
 const CoinsList = styled.ul``;
 const Coin = styled.li`
-  background-color: white;
-  color: #000000;
+  background-color: ${(props) => props.theme.cardBgColor};
+  color: ${(props) => props.theme.textColor};
   font-weight: 600;
   margin-bottom: 10px;
   border-radius: 15px;
   transition: background-color 0.2s ease-in;
+  border: 1px solid white;
 
   a {
     display: flex;
@@ -70,7 +71,12 @@ interface ICoin {
   in_active: boolean;
   type: string;
 }
-function Coins() {
+
+interface ICoinsProps {
+  toggleDark: () => void;
+}
+
+function Coins({ toggleDark }: ICoinsProps) {
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
   //2가지의 argument를 필요로함.(query key, fetch Fn)
 
@@ -82,6 +88,7 @@ function Coins() {
       </Helmet>
       <Header>
         <Title>Coins</Title>
+        <button onClick={toggleDark}>Toggle Dark Mode</button>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>

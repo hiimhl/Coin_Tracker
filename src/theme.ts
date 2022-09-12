@@ -10,6 +10,7 @@ export const lightTheme: DefaultTheme = {
   hoverTextColor: "white",
   switchColor: "#C9C9C9",
   borderColor: "rgba(0, 175, 185, 0.8)",
+  cardBgColor: "white",
 };
 
 export const darkTheme: DefaultTheme = {
@@ -22,4 +23,5 @@ export const darkTheme: DefaultTheme = {
   switchColor:
     "linear-gradient( to right,hsl(210, 78%, 56%),hsl(146, 68%, 55%))",
   borderColor: "white",
+  cardBgColor: "transparent",
 };
